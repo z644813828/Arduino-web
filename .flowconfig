@@ -1,0 +1,13 @@
+[ignore]
+.*\.min\.js
+.*/scripts/.*
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+
+[strict]

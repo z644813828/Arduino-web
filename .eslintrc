@@ -1,0 +1,19 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "rules": {
+        "prefer-destructuring": ["error", {
+        "AssignmentExpression": {
+            "array": false,
+            "object": false
+        }
+        }]
+    },
+    # "plugins": [
+    #     "html"
+    # ]
+}

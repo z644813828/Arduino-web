@@ -1,0 +1,41 @@
+{
+    "preset": "google",
+    "fileExtensions": [".js", "jscs"],
+
+    "requireSemicolons": true,
+    "requireParenthesesAroundIIFE": true,
+    "requireCurlyBraces": true,
+    "maximumLineLength": 120,
+    "validateLineBreaks": "LF",
+    "validateIndentation": 4,
+    "disallowTrailingComma": true,
+    "disallowUnusedParams": true,
+
+    "requireCamelCaseOrUpperCaseIdentifiers": false,
+    "validateIndentation": false,
+    "requireLineFeedAtFileEnd": false,
+    "validateQuoteMarks": false,
+
+    "disallowSpacesInsideObjectBrackets": null,
+    "disallowImplicitTypeConversion": ["string"],
+
+    "safeContextKeyword": "_this",
+
+    "jsDoc": {
+        "checkAnnotations": "closurecompiler",
+        "checkParamNames": true,
+        "requireParamTypes": true,
+        "checkRedundantParams": true,
+        "checkReturnTypes": true,
+        "checkRedundantReturns": true,
+        "requireReturnTypes": true,
+        "checkTypes": "capitalizedNativeCase",
+        "checkRedundantAccess": true,
+        "requireNewlineAfterDescription": true
+    },
+
+    "excludeFiles": [
+        "srcipts/**",
+        "**min.js"
+    ]
+}

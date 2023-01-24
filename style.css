@@ -1,0 +1,113 @@
+body {
+	background-image: url('utils/background.png') !important;
+	background-repeat: no-repeat;
+	background-attachment: local;
+	background-position: right;
+	background-size: cover;
+}
+
+#CONTENT_DIV_ROW {
+	height:calc(100vh - 56px - 32px);
+}
+
+#TIME {
+	position:absolute; top:10px;
+	left:calc(50vw - 20px);
+}
+
+div {
+	color: white;
+}
+
+select {
+	color: white !important;
+	background-color: #1f1f1f !important;
+}
+
+input {
+	color: white !important;
+	background-color: #1f1f1f !important;
+}
+
+.navbar {
+	font-family: 'Games', sans-serif;
+	background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.button-deck {
+	height: 70px !important;
+	background-color: transparent !important;
+	font-family: 'Games', sans-serif;
+	font-size: 150%;
+	text-align: center !important;
+}
+
+button {
+	white-space: nowrap;
+}
+
+.container {
+    margin: 0px;
+    padding: 0px;
+    float: left;
+    text-align: center;
+    max-width: 20px
+}
+.nav-link {
+    cursor: pointer !important;
+}
+
+input[type=range].range {
+    cursor: pointer;
+    width: 200px !important;
+    -webkit-appearance: none;
+    z-index: 200;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-top: 130px;
+	margin-left: -80px;
+	margin-right: -80px;
+    border: 1px solid #e6e6e6;
+    background-color: #e6e6e6;
+	height:10px !important;
+}
+
+input[type=range].range:focus {
+    border: 0 !important;
+    outline: 0 !important
+}
+
+input[type=range].range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+}
+
+input[type=range].round {
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px
+}
+
+input[type=range].round::-webkit-slider-thumb {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px
+}
+
+.vertical-lowest-first {
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg)
+}
+
+.vertical-heighest-first {
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg)
+}
