@@ -55,7 +55,7 @@
 		<input id="ARGB_DEBUG" type="checkbox" data-toggle="toggle"
 		data-onlabel="<i class='fa fa-play'></i> Start"
 		data-offlabel="<i class='fa fa-pause'></i> Stop"
-		data-onstyle="danger" id="debug_led_toggle">
+		data-onstyle="danger">
 	</div>
 </div>
 <br>

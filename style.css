@@ -1,9 +1,13 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,300,600);
+
 body {
+	font-family: 'Roboto', sans-serif !important;
+	background-color: black !important;
 	background-image: url('utils/background.png') !important;
 	background-repeat: no-repeat;
 	background-attachment: local;
 	background-position: right;
-	background-size: cover;
+	background-size: cover !important;
 }
 
 #CONTENT_DIV_ROW {
@@ -42,6 +46,17 @@ input {
 	text-align: center !important;
 }
 
+@font-face {
+  font-family: 'password';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://jsbin-user-assets.s3.amazonaws.com/rafaelcastrocouto/password.ttf);
+}
+
+input.key {
+  font-family: 'password';
+}
+
 button {
 	white-space: nowrap;
 }
@@ -57,57 +72,25 @@ button {
     cursor: pointer !important;
 }
 
-input[type=range].range {
-    cursor: pointer;
-    width: 200px !important;
-    -webkit-appearance: none;
-    z-index: 200;
-	padding-left: 0px;
-	padding-right: 0px;
-	margin-top: 130px;
-	margin-left: -80px;
-	margin-right: -80px;
-    border: 1px solid #e6e6e6;
-    background-color: #e6e6e6;
-	height:10px !important;
+.toast-container {
+	position: absolute;
+	bottom: 65px;
+	left:calc((50vw - 350px) / 2)
 }
 
-input[type=range].range:focus {
-    border: 0 !important;
-    outline: 0 !important
+$bg: #434d5a;
+
+[id*=flat-slider].ui-slider,
+[id*=flat-slider].ui-slider .ui-slider-pip .ui-slider-line {
+    background: lighten($bg, 25%);
 }
 
-input[type=range].range::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    background-color: red;
+[id*=flat-slider].ui-slider .ui-slider-handle .ui-slider-tip:after {
+    border-left-color: #434d5a;
 }
 
-input[type=range].round {
-    -webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
-    border-radius: 50px
-}
 
-input[type=range].round::-webkit-slider-thumb {
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -o-border-radius: 5px
-}
-
-.vertical-lowest-first {
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    transform: rotate(90deg)
-}
-
-.vertical-heighest-first {
-    -webkit-transform: rotate(270deg);
-    -moz-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    transform: rotate(270deg)
-}
+[id*=flat-slider].ui-slider .ui-slider-handle.ui-state-hover, 
+[id*=flat-slider].ui-slider .ui-slider-handle.ui-state-focus, 
+[id*=flat-slider].ui-slider .ui-slider-handle.ui-state-active {
+      border-color: white; }

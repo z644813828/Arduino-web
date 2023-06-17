@@ -13,13 +13,17 @@ $json = '{
         "current_error_effect": "BouncingBalls",
         "current_color": "BouncingBalls",
         "arguments": { "BallCount": "3"},
-        "debug_led": "0",
+        "debug_led": "1",
         "soil_wetness": 230,
         "motion_timeout": 15,
         "display_brightness": 255,
-        "display_off_brightness": 20
+        "display_off_brightness": 20,
+        "motion_time_start": 360,
+        "motion_time_stop": 0,
+        "fpanel_power_timeout": 10,
+        "fpanel_acknowledge_timeout": 10
     }';
 // */
 
-$json = file_get_contents("http://192.168.2.250/settings");
+// $json = file_get_contents("http://192.168.2.250/settings");
 echo $json;

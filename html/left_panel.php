@@ -32,8 +32,7 @@ $data = array(
 	Your browser does not support HTML video.
 </video>
 
-<div class="toast-container w-50 start-0 pl-4" data-original-class="toast-container p-3"  style="position: absolute; bottom: 65px">
-
+<div class="toast-container w-50 pl-4" data-original-class="toast-container p-3"  >
 <?php foreach ($data as $key => $value) : ?>
 	<div class="toast fade show bg-dark" id="NOTIFICATION_<?php echo $value["id"]; ?>"  style="display:<?php echo $value["display"]; ?>">
 		<div class="toast-header bg-dark">

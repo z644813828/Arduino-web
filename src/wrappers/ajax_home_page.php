@@ -1,16 +1,16 @@
 <?php
 
-    $file = fopen("/var/log/arduino.log", "r") or die("Unable to open file!");
-    $file_content = fread($file, filesize("/var/log/arduino.log"));
-    fclose($file);
+    include 'secrets.php';
 
-    $data = preg_split("/\r\n|\n|\r/", $file_content);
+    $main_pc = array(
+        "avgload" => rand(0, 100),
+        "temp" => rand(30, 80)
+    );
 
     $response = array(
-        "pc" => $data[0] != "0",
-        "arduino" => $data[1] != "0",
-        "monit" => $data[2],
-        "soil_wetness" => false,
-        "motion" => false
+        "monit" => json_decode(file_get_contents("/var/log/arduino.log")),
+        "arduino" => json_decode(file_get_contents("/var/log/arduino_data.log")),
+        "main_pc" => $main_pc
+        // "arduino" => json_decode(file_get_contents("http://192.168.2.250/data"))
     );
     echo json_encode($response);

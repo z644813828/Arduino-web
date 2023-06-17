@@ -1,3 +1,5 @@
+var G = {};
+
 var HTTP_REQUEST_COLOR = "color"
 var HTTP_REQUEST_EFFECT = "effect"
 var HTTP_REQUEST_ERROR_EFFECT = "error_effect"
@@ -10,6 +12,10 @@ var HTTP_REQUEST_MOTION_TIMEOUT = "motion_timeout"
 var HTTP_REQUEST_REBOOT = "reboot"
 var HTTP_REQUEST_DISPLAY_BRIGHTNESS = "display_brightness"
 var HTTP_REQUEST_DISPLAY_OFF_BRIGHTNESS = "display_off_brightness"
+var HTTP_REQUEST_MOTION_TIME_START = "motion_time_start"
+var HTTP_REQUEST_MOTION_TIME_STOP = "motion_time_stop"
+var HTTP_REQUEST_FPANEL_POWER = "fpanel_power"
+var HTTP_REQUEST_FPANEL_ACKNOWLEDGE = "fpanel_acknowledge"
 
 
 var T_AJAX_MONITORING = 0;
@@ -18,6 +24,7 @@ var T_MAIN_THREAD = 0;
 window.addEventListener('load', function() {
 	if (window.chrome) {
 		$('#BTN_START').css("display", "");
+		$('#BTN_START_PASSWORD').css("display", "");
 		$('#BTN_START_CONTENT').css("display", "none");
 	}
 	switсh_nav('HOME');
@@ -36,44 +43,60 @@ var Status = {
 	pc: {
 		status: null,
 		text: "",
+		has_text: false,
 		date: "",
 		id: "MONIT",
-		shown: false
+		shown: false,
+		group: "monit",
+		tag: "pc"
 	},
 	motion: {
 		status: null,
 		text: "",
+		has_text: false,
 		date: "",
 		id: "MOTION",
-		shown: false
+		shown: false,
+		group: "arduino",
+		tag: "motion"
 	},
 	monit: {
 		status: false,
 		text: "",
+		has_text: true,
 		date: "Now",
 		id: "MONIT",
-		shown: false
+		shown: false,
+		group: "monit",
+		tag: "summary"
 	},
 	arduino: {
 		status: false,
 		text: "",
+		has_text: false,
 		date: "Now",
 		id: "ARDUINO",
-		shown: false
+		shown: false,
+		group: "monit",
+		tag: "arduino"
 	},
 	soil_wetness: {
 		status: false,
 		text: "",
+		has_text: false,
 		date: "Now",
 		id: "SOIL_WETNESS",
-		shown: false
+		shown: false,
+		group: "arduino",
+		tag: "soil_wetness"
 	},
 	server: {
 		status: false,
 		text: "",
+		has_text: false,
 		date: "Now",
 		id: "SERVER",
-		shown: false
+		shown: false,
 	},
 };
 
@@ -179,12 +202,23 @@ function switch_esp8266(sw) {
 
 
 function initHandlers() {
-	$('#BTN_START').click(function() {
+	function accept_password() {
+		if ($('#BTN_START_PASSWORD').val() != "346452")
+			return;
 		$('#BTN_START').css("display", "none");
+		$('#BTN_START_PASSWORD').css("display", "none");
 		$('#BTN_START_CONTENT').css("display", "");
 		document.getElementById('MAIN_LOGO').play();
-	});
+		$('#BTN_START_PASSWORD').off('change');
+		$('#BTN_START_PASSWORD').blur();
+	}
 
+	$('#BTN_START').click(function() {
+		accept_password();
+	});
+	$('#BTN_START_PASSWORD').change(function() {
+		accept_password();
+	});
 	$('#NAV_ARGB').click(function() {
 		switсh_nav('ARGB');
 	});
@@ -211,33 +245,50 @@ function initHandlers() {
 	initHandlersESP8266();
 }
 
+var seq_num = 0;
+
 function ajaxLeftPanelHandler(response) {
-	function fill(el, tag, has_text) {
-		if (has_text) {
-			if (el.text != response[tag])
-				el.date = getTime();
+	function get_value(el) {
+		return response[el.group][el.tag];
+	}
 
-			el.status = response[tag] == "";
-			el.text = response[tag];
+	function fill(el) {
+		var value = get_value(el);
+		if (el.has_text) {
+			if (el.text != value) {
+				el.seq_num = seq_num;
+				el.date = getTime();
+			}
+
+			el.status = value == "";
+			el.text = value;
 		} else {
-			if (el.status != response[tag])
+			if (el.status != value) {
+				el.seq_num = seq_num;
 				el.date = getTime();
+			}
 
-			el.status = response[tag];
+			el.status = value;
 		}
 	}
 
+	seq_num++;
 
-	if (Status.arduino.status != response["arduino"]) {
+	if (Status.arduino.status != response["monit"]["arduino"]) {
 		ajaxLoadSettings();
 	}
 
-	fill(Status.monit, "monit", true);
-	fill(Status.soil_wetness, "soil_wetness", false);
-	fill(Status.arduino, "arduino", false);
-	fill(Status.pc, "pc", false);
-	fill(Status.motion, "motion", false);
+	fill(Status.monit);
+	fill(Status.arduino);
+	fill(Status.pc);
 
-	switch_power(Status.pc.status || Status.motion.status);
-	switch_esp8266(Status.arduino.status);
+	fill(Status.soil_wetness);
+	fill(Status.motion);
+
+	if ((Status.pc.seq_num == seq_num) ||
+		(Status.motion.seq_num == seq_num))
+		switch_power(Status.pc.status || Status.motion.status);
+
+
+	switch_esp8266(Status.arduino.status && !response["arduino"]["forced_poweroff"]);
 }

@@ -78,7 +78,12 @@ function ajaxLoadArgbHandler(response) {
 		$('#ARGB_EFFECT_ARGUMENTS').append(form);
 	}
 
-	$("#ARGB_DEBUG").bootstrapToggle(response.debug_led ? "on" : "off");
+	// $("#ARGB_DEBUG").bootstrapToggle("on");
+	$('#ARGB_DEBUG').change(function() {
+		console.log(arguments.callee.name); //DBGPRINT
+		$("#ARGB_DEBUG").bootstrapToggle();
+	})
+	// $("#ARGB_DEBUG").bootstrapToggle(response.debug_led ? "on" : "off");
 
 	initHandlersArgb();
 }

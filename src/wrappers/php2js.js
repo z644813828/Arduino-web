@@ -52,6 +52,27 @@ function ajaxSetValue(_type, _data) {
 	});
 }
 
+function ajaxHomeButton(_data) {
+	console.log(_type, _data); //DBGPRINT
+	$.ajax({
+		url: 'src/wrappers/ajax_home_button.php',
+		data: {
+			data: _data
+		},
+		success: function(response) {
+			console.log(response);
+			ajaxLoadSettings();
+		},
+		timeout: 10000,
+		async: true,
+		error: function(response) {
+			console.log("ERROR: AJAX:" + response.status);
+			ajaxLoadSettings();
+		}
+	});
+}
+
+
 function ajaxSaveEeprom() {
 	console.log(arguments.callee.name); //DBGPRINT
 	$.ajax({

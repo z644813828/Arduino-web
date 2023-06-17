@@ -39,3 +39,18 @@
 		</div>
 	</div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/rangeslider.js/2.3.2/rangeslider.min.css" rel="stylesheet" />
+
+
+<div class="w-100 my-4">
+	<div class="stuff">
+		<div id="flat-slider"></div>
+		<div id="flat-slider-vertical-1"></div>
+		<div id="flat-slider-vertical-2"></div>
+		<div id="flat-slider-vertical-3"></div>
+	</div>
+</div>
