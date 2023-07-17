@@ -22,11 +22,9 @@ var T_AJAX_MONITORING = 0;
 var T_MAIN_THREAD = 0;
 
 window.addEventListener('load', function() {
-	if (window.chrome) {
-		$('#BTN_START').css("display", "");
-		$('#BTN_START_PASSWORD').css("display", "");
-		$('#BTN_START_CONTENT').css("display", "none");
-	}
+	$('#BTN_START').css("display", "");
+	$('#BTN_START_PASSWORD').css("display", "");
+	$('#BTN_START_CONTENT').css("display", "none");
 	switсh_nav('HOME');
 	initHandlers();
 	start_ajax_monitoring();
@@ -81,7 +79,7 @@ var Status = {
 		tag: "arduino"
 	},
 	soil_wetness: {
-		status: false,
+		status: null,
 		text: "",
 		has_text: false,
 		date: "Now",
@@ -102,10 +100,11 @@ var Status = {
 
 function mainThread() {
 	function show(el) {
-		$(`#NOTIFICATION_${el.id}`).css("display", el.status ? "none" : "")
-		if (el.status) {
+		if (el.status == true) {
+			$(`#NOTIFICATION_${el.id}`).css("display", "none")
 			$(`#ICON_${el.id}`).css("visibility", "visible")
-		} else {
+		} else if (el.status == false) {
+			$(`#NOTIFICATION_${el.id}`).css("display", "")
 			$(`#NOTIFICATION_DATE_${el.id}`).text(el.date);
 
 			if (el.text) {
@@ -116,6 +115,10 @@ function mainThread() {
 			$(`#ICON_${el.id}`).css("visibility", el.shown ? "hidden" : "visible")
 			el.shown = !el.shown;
 
+			Status.server.status = true;
+		} else {
+			$(`#NOTIFICATION_${el.id}`).css("display", "none")
+			$(`#ICON_${el.id}`).css("visibility", "hidden")
 			Status.server.status = true;
 		}
 	}
@@ -196,6 +199,7 @@ function switch_esp8266(sw) {
 	} else {
 		$('#NAV_ARGB').children(":first").addClass("disabled");
 		$('#NAV_ESP8266').children(":first").addClass("disabled");
+		switсh_nav('HOME');
 	}
 }
 
@@ -203,8 +207,15 @@ function switch_esp8266(sw) {
 
 function initHandlers() {
 	function accept_password() {
-		if ($('#BTN_START_PASSWORD').val() != "346452")
+
+		if ($('#BTN_START_PASSWORD').val() != START_PASSWORD) {
+			$('#BTN_START_PASSWORD').addClass("bg-danger");
+			$('#BTN_START_PASSWORD').val("");
+			setTimeout(() =>
+				$('#BTN_START_PASSWORD').removeClass("bg-danger"), 1000);
 			return;
+		}
+
 		$('#BTN_START').css("display", "none");
 		$('#BTN_START_PASSWORD').css("display", "none");
 		$('#BTN_START_CONTENT').css("display", "");
@@ -219,17 +230,11 @@ function initHandlers() {
 	$('#BTN_START_PASSWORD').change(function() {
 		accept_password();
 	});
-	$('#NAV_ARGB').click(function() {
-		switсh_nav('ARGB');
-	});
-	$('#NAV_ESP8266').click(function() {
-		switсh_nav('ESP8266');
-	});
-	$('#NAV_HOME').click(function() {
-		switсh_nav('HOME');
-	});
-	$('#NAV_SETTINGS').click(function() {
-		switсh_nav('SETTINGS');
+
+	["ARGB", "ESP8266", "HOME", "SETTINGS"].forEach((i) => {
+		$(`#NAV_${i}`).click(function() {
+			switсh_nav(i);
+		});
 	});
 
 	$('#NAV_POWEROFF').click(function() {
@@ -249,7 +254,9 @@ var seq_num = 0;
 
 function ajaxLeftPanelHandler(response) {
 	function get_value(el) {
-		return response[el.group][el.tag];
+		if (response[el.group])
+			return response[el.group][el.tag];
+		return "";
 	}
 
 	function fill(el) {

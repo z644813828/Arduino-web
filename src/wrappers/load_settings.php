@@ -1,6 +1,6 @@
 <?php
 
-// /*
+/*
 $json = '{
         "brightness": 255,
         "effects": [
@@ -23,7 +23,7 @@ $json = '{
         "fpanel_power_timeout": 10,
         "fpanel_acknowledge_timeout": 10
     }';
-// */
+*/
 
-// $json = file_get_contents("http://192.168.2.250/settings");
+$json = file_get_contents("http://192.168.2.250/settings", 0, stream_context_create(["http"=>["timeout"=>20]]));
 echo $json;

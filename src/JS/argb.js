@@ -38,7 +38,7 @@ function ajaxLoadArgbHandler(response) {
 	$('#ARGB_COLOR').empty();
 	response.colors.forEach(i => {
 		var selected = (i == response.current_color) ? "selected" : "";
-		$('#ARGB_COLOR').append(`<option value=${i}" ${selected}>${i}</option>`);
+		$('#ARGB_COLOR').append(`<option value=${i} ${selected}>${i}</option>`);
 	});
 
 	$('#ARGB_BRIGHTNESS_LABEL').text(response.brightness);
@@ -47,13 +47,13 @@ function ajaxLoadArgbHandler(response) {
 	$('#ARGB_EFFECT').empty();
 	response.effects.forEach(i => {
 		var selected = (i == response.current_effect) ? "selected" : "";
-		$('#ARGB_EFFECT').append(`<option value=${i}" ${selected}>${i}</option>`);
+		$('#ARGB_EFFECT').append(`<option value=${i} ${selected}>${i}</option>`);
 	});
 
 	$('#ARGB_ERROR_EFFECT').empty();
 	response.effects.forEach(i => {
 		var selected = (i == response.current_error_effect) ? "selected" : "";
-		$('#ARGB_ERROR_EFFECT').append(`<option value=${i}" ${selected}>${i}</option>`);
+		$('#ARGB_ERROR_EFFECT').append(`<option value=${i} ${selected}>${i}</option>`);
 	});
 
 	$('#ARGB_EFFECT_ARGUMENTS').empty();

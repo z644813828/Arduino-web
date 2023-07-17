@@ -17,16 +17,17 @@ function ajaxLoadSettings() {
 	$.ajax({
 		url: 'src/wrappers/load_settings.php',
 		dataType: "json",
+		timeout: 20000,
+		async: true,
 		success: function(response) {
 			console.log(response); //DBGPRINT
 			ajaxLoadArgbHandler(response);
 			ajaxLoadSettingsHandler(response);
 			ajaxLoadSettingsESP8266(response);
 		},
-		timeout: 10000,
-		async: true,
-		error: function(response) {
+		error: function(response, textStatus) {
 			console.log("ERROR: AJAX:" + response.status);
+			console.log(textStatus); //DBGPRINT
 		}
 	});
 }

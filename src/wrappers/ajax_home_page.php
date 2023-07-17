@@ -7,10 +7,16 @@
         "temp" => rand(30, 80)
     );
 
+    $monit_data = json_decode(file_get_contents("/var/log/arduino.log"));
+    $arduino_data = "-1";
+
+    if ($monit_data->{'arduino'}) {
+        $arduino_data = json_decode(file_get_contents("http://192.168.2.250/data"));
+    }
+
     $response = array(
-        "monit" => json_decode(file_get_contents("/var/log/arduino.log")),
-        "arduino" => json_decode(file_get_contents("/var/log/arduino_data.log")),
+        "monit" => $monit_data,
+        "arduino" => $arduino_data,
         "main_pc" => $main_pc
-        // "arduino" => json_decode(file_get_contents("http://192.168.2.250/data"))
     );
     echo json_encode($response);
